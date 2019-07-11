@@ -2,10 +2,7 @@
 <div class="login-container">
  <el-card class="login-box">
    <img src="../../assets/images/logo_index.png" alt="">
-   <el-input v-model="name" placeholder="手机号"></el-input>
-   <el-input v-model="pwd" placeholder="请输入验证码" class="input2"></el-input>
-   <el-button class="yzbtn">验证码</el-button>
-   <el-button type="primary" class="btn">登录</el-button>
+
  </el-card>
 
 </div>
@@ -13,12 +10,7 @@
 
 <script>
 export default {
-  data () {
-    return {
-      name: '',
-      pwd: ''
-    }
-  }
+
 }
 </script>
 
@@ -42,19 +34,7 @@ export default {
       width: 200px;
       margin: 10px auto;
     }
-    input{
-      margin-bottom: 20px ;
-    }
-    .input2{
-      width: 200px;
-    }
-    .yzbtn{
-     margin-left: 40px;
-    }
-    .btn{
-      width: 360px;
-      margin-left: 0;
-    }
+
   }
 }
 </style>
