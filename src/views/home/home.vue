@@ -3,6 +3,7 @@
     <el-aside class="my-asdie" :width="collapse?'64px':'200px'">
       <div class="logo" :class="{close:collapse}"></div>
       <el-menu
+        router
         style="border-right:none"
         default-active="1"
         background-color="#002033"
@@ -65,7 +66,9 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
