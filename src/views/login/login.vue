@@ -37,8 +37,8 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '',
-        code: ''
+        mobile: '13911111111',
+        code: '246810'
       },
       loginRules: {
         mobile: [
@@ -61,6 +61,7 @@ export default {
           this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
             .then(res => {
               // console.log(res)
+              window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data))
               this.$router.push('/')
             })
             .catch(() => {
