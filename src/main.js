@@ -3,9 +3,10 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router'
-import axios from 'axios'
-// 基准路径
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
+// 引入axios
+import axios from '@/api/axios.js'
+// 基准路径 (不用了)
+// axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 // axios.defaults.headers = {
 //   // token认证
 //   Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('hm74-toutiao')).data.token

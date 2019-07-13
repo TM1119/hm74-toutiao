@@ -60,7 +60,7 @@ export default {
         if (valid) {
           this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
             .then(res => {
-              // console.log(res)
+              console.log(res)
               window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
               this.$router.push('/')
             })
