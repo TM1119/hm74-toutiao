@@ -6,10 +6,10 @@ import router from '@/router'
 import axios from 'axios'
 // 基准路径
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
-axios.defaults.headers = {
-  // token认证
-  Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('hm74-toutiao')).data.token
-}
+// axios.defaults.headers = {
+//   // token认证
+//   Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('hm74-toutiao')).data.token
+// }
 Vue.prototype.$http = axios
 Vue.use(ElementUI)
 Vue.config.productionTip = false
