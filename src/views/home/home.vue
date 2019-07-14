@@ -48,21 +48,21 @@
       <el-header class="my-header">
         <span class="el-icon-s-fold" @click="toggleMenu"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown style="float:right">
+        <el-dropdown style="float:right" @command="handleComand">
           <span class="el-dropdown-link">
             <img
               style="vertical-align: middle"
               width="20"
               height="20"
-              src="../../assets/images/avatar.jpg"
-              alt
+              :src="avatar"
+
             />
-            <b style="vertical-align: middle;padding-left:5px">黑马小哥</b>
+            <b style="vertical-align: middle;padding-left:5px">{{name}}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" command='setting'>个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -77,12 +77,31 @@
 export default {
   data () {
     return {
-      collapse: false
+      collapse: false,
+      avatar: '',
+      name: ''
     }
+  },
+  created () {
+    const user = JSON.parse(window.sessionStorage.getItem('hm74-toutiao'))
+    this.avatar = user.photo
+    this.name = user.name
   },
   methods: {
     toggleMenu () {
       this.collapse = !this.collapse
+    },
+    // 个人设置
+    setting () {
+      this.$router.push('/setting')
+    },
+    // 退出登录
+    logout () {
+      window.sessionStorage.removeItem('hm74-toutiao')
+      this.$router.push('/login')
+    },
+    handleComand (command) {
+      this[command]()
     }
   }
 }
