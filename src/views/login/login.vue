@@ -56,18 +56,29 @@ export default {
   methods: {
     login () {
       // 对整个表单进行校验
-      this.$refs.loginForm.validate((valid) => {
+      // this.$refs.loginForm.validate((valid) => {
+      //   if (valid) {
+      //     this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
+      //       .then(res => {
+      //         console.log(res)
+      //         window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
+      //         this.$router.push('/')
+      //       })
+      //       .catch(() => {
+      //         // 错误提示
+      //         this.$message.error('手机号或验证码错误')
+      //       })
+      //   }
+      // })
+      this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
-          this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
-            .then(res => {
-              console.log(res)
-              window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
-              this.$router.push('/')
-            })
-            .catch(() => {
-              // 错误提示
-              this.$message.error('手机号或验证码错误')
-            })
+          try {
+            const res = await this.$http.post('authorizations', this.loginForm)
+            window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
+            this.$router.push('/')
+          } catch (err) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }
