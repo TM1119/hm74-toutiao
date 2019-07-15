@@ -3,6 +3,7 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router'
+import components from '@/components'
 // 引入axios
 import axios from '@/api/axios.js'
 // 基准路径 (不用了)
@@ -12,6 +13,7 @@ import axios from '@/api/axios.js'
 //   Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('hm74-toutiao')).data.token
 // }
 Vue.prototype.$http = axios
+Vue.use(components)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 

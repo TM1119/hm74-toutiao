@@ -3,10 +3,7 @@
   <!-- 筛选区域 -->
   <el-card>
     <div slot="header">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-    </el-breadcrumb>
+      <my-bread>内容管理</my-bread>
     </div>
     <!-- 筛选表单 -->
     <el-form :model="reqParams" size="small" label-width="80px">
@@ -55,9 +52,9 @@
 </template>
 
 <script>
-import MyTest from '@/components/my-test.vue'
+
 export default {
-  components: { MyTest },
+
   data () {
     return {
       reqParams: {
