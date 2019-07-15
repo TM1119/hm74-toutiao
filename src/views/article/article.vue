@@ -29,7 +29,7 @@
             </el-option>
           </el-select>
       </el-form-item>
-      <el-form-item label="日期">
+      <el-form-item label="日期:">
          <el-date-picker
       v-model="dateValues"
       type="daterange"
@@ -44,12 +44,20 @@
     </el-form>
   </el-card>
   <!-- 结果区域 -->
-  <el-card></el-card>
+  <el-card>
+    <my-test>
+      <!-- <template slot="content" slot-scope="scope"> 内容1{{scope.test}} </template> -->
+      <template v-slot:content="scope"> 内容1{{scope.test}} </template>
+     <template slot="footer">底部1</template>
+       </my-test>
+  </el-card>
   </div>
 </template>
 
 <script>
+import MyTest from '@/components/my-test.vue'
 export default {
+  components: { MyTest },
   data () {
     return {
       reqParams: {
