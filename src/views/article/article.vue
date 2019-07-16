@@ -1,6 +1,7 @@
 <template>
   <div class="article-container">
-    <!-- 筛选区域  明天删了 -->
+
+    <!-- 筛选区域 -->
     <el-card>
       <div slot="header">
         <my-bread>内容管理</my-bread>
@@ -17,14 +18,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道:">
-          <el-select v-model="reqParams.channel_id" placeholder="请选择">
-            <el-option
-              v-for="item in  channelOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>
+          <my-channel v-model="reqParams.channel_id"></my-channel>
         </el-form-item>
         <el-form-item label="日期:">
           <el-date-picker
@@ -107,8 +101,7 @@ export default {
         begin_pubdate: null,
         end_pubdate: null
       },
-      // 频道的选项数组
-      channelOptions: [{ name: 'java', id: 1 }],
+
       // 日期数据
       dateValues: [],
       // 文章列表数据
@@ -118,8 +111,6 @@ export default {
     }
   },
   created () {
-    // 获取频道数据
-    this.getChannelOptions()
     // 获取文章列表数据
     this.getArticle()
   },
@@ -158,13 +149,7 @@ export default {
       this.reqParams.begin_pubdate = value[0]
       this.reqParams.end_pubdate = value[1]
     },
-    // 获取频道数据
-    async getChannelOptions () {
-      const {
-        data: { data }
-      } = await this.$http.get('channels')
-      this.channelOptions = data.channels
-    },
+
     async getArticle () {
       const {
         data: { data }
