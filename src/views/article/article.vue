@@ -51,39 +51,45 @@
       </my-test>-->
       <div slot="header">
         根据筛选条件共查询到
-        <b>0</b>条结果:
+        <b>{{total}}</b>条结果:
       </div>
       <el-table :data="articles">
         <el-table-column label="封面">
           <template slot-scope="scope">
-
             <el-image :src="scope.row.cover.images[0]" style="width:100px;height:75px">
-                <div slot="error" >
-                 <img src="../../assets/images/error.gif" width="100" height="75" alt="">
-                </div>
+              <div slot="error">
+                <img src="../../assets/images/error.gif" width="100" height="75" alt />
+              </div>
             </el-image>
           </template>
         </el-table-column>
         <el-table-column label="标题" prop="title"></el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
-              <el-tag v-if="scope.row.status===0" type="info">草稿</el-tag>
+            <el-tag v-if="scope.row.status===0" type="info">草稿</el-tag>
             <el-tag v-if="scope.row.status===1">待审核</el-tag>
-              <el-tag v-if="scope.row.status===2" type="success">审核通过</el-tag>
-              <el-tag v-if="scope.row.status===3" type="warning">审核失败</el-tag>
-              <el-tag v-if="scope.row.status===4" type="danger">已删除</el-tag>
+            <el-tag v-if="scope.row.status===2" type="success">审核通过</el-tag>
+            <el-tag v-if="scope.row.status===3" type="warning">审核失败</el-tag>
+            <el-tag v-if="scope.row.status===4" type="danger">已删除</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="发布时间" prop="pubdate"></el-table-column>
         <el-table-column label="操作" width="120px">
-          <template slot-scope="">
-            <el-button icon="el-icon-edit" plain type="primary" circle></el-button>
-            <el-button icon="el-icon-delete" plain type="danger" circle></el-button>
+          <template slot-scope="scope">
+            <el-button icon="el-icon-edit" @click="edit(scope.row.id)" plain type="primary" circle></el-button>
+            <el-button icon="el-icon-delete" @click="del(scope.row.id)" plain type="danger" circle></el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="box">
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :page-size="reqParams.per_page"
+          @current-change="pager"
+          :current-page="reqParams.page"
+          :total="total"
+        ></el-pagination>
       </div>
     </el-card>
   </div>
@@ -94,6 +100,8 @@ export default {
   data () {
     return {
       reqParams: {
+        page: 1,
+        per_page: 20,
         status: null,
         channel_id: null,
         begin_pubdate: null,
@@ -104,7 +112,9 @@ export default {
       // 日期数据
       dateValues: [],
       // 文章列表数据
-      articles: []
+      articles: [],
+      // 总条数
+      total: 0
     }
   },
   created () {
@@ -114,8 +124,33 @@ export default {
     this.getArticle()
   },
   methods: {
+    // 编辑
+    edit (id) {
+      this.$router.push(`publish?id=${id}`)
+    },
+    // 删除
+    del (id) {
+      this.$confirm('亲此操作将永久删除该文章, 是否继续?', '温馨提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await this.$http.delete(`articles/${id}`)
+        this.$message.succes('删除成功')
+        this.getArticle()
+      }).catch(() => {
+
+      })
+    },
+    pager (newPager) {
+      // 提交当前页码提交给后台才能获取对应的数据
+      this.reqParams.page = newPager
+      this.getArticle()
+    },
+    // 分页
     // 搜索
     search () {
+      this.reqParams.page = 1
       this.getArticle()
     },
     // 选择时间处理函数
@@ -135,6 +170,7 @@ export default {
         data: { data }
       } = await this.$http.get('articles', { params: this.reqParams })
       this.articles = data.results
+      this.total = data.total_count
     }
   }
 }
