@@ -6,6 +6,8 @@ import router from '@/router'
 import components from '@/components'
 // 引入axios
 import axios from '@/api/axios.js'
+// 导入全局样式
+import '@/styles/index.less'
 // 基准路径 (不用了)
 // axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 // axios.defaults.headers = {
