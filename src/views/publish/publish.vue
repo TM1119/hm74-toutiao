@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="article-container">
     <el-card>
       <div slot="header">
         <my-bread>发布文章</my-bread>
@@ -9,7 +9,7 @@
           <el-input v-model="articleForm.title" style="width:400px"></el-input>
         </el-form-item>
            <el-form-item label="内容:" >
-          <quill-editor v-model="articleForm.content"></quill-editor>
+          <quill-editor :options="editorOption" v-model="articleForm.content"></quill-editor>
         </el-form-item>
         <el-form-item label="封面:" >
           <el-radio-group v-model="articleForm.cover.type">
@@ -43,6 +43,19 @@ export default {
   components: { quillEditor },
   data () {
     return {
+      // 富文本编辑器的配置选项
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }]
+          ]
+        }
+      },
+      // 提交给后天的文章数据
       articleForm: {
         title: '',
         content: '',
