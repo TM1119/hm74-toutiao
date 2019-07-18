@@ -18,11 +18,12 @@
      <li v-for="item in images" :key="item.id">
        <img :src="item.url" alt="">
        <div class="fot" v-if="!reqParams.collect">
-         <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
-         <span class="el-icon-delete"></span>
+         <span @click="toggleFav(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
+         <span @click="delImages(item.id)" class="el-icon-delete"></span>
        </div>
      </li>
    </ul>
+        <!-- 分页 -->
       <el-pagination
           v-if="total > reqParams.per_page"
           background
@@ -84,6 +85,27 @@ export default {
     this.getImages()
   },
   methods: {
+    // 点击删除图片
+    delImages (id) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await this.$http.delete('user/images/' + id)
+        this.$message.success('删除成功')
+        this.getImages()
+      }).catch(() => { })
+    },
+    // 点击收藏
+    async toggleFav (item) {
+      const { data: { data } } = await this.$http.put('user/images/' + item.id, {
+        collect: !item.is_collected
+      })
+      // 成功
+      this.$message.success('操作成功')
+      item.is_collected = data.collect
+    },
     // 上传成功
     handleSuccess (res) {
       // 预览2s钟,提示上传成功
