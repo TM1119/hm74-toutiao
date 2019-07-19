@@ -3,6 +3,8 @@
 import MyBread from '@/components/my-bread.vue'
 // 频道组件引入
 import MyChannel from '@/components/my-channel.vue'
+import MyImage from '@/components/my-image.vue'
+
 export default {
   install (Vue) {
     // 使用vue对象去做你的业务即可
@@ -10,5 +12,6 @@ export default {
     //            组件名称     组件配置对象
     Vue.component(MyBread.name, MyBread)
     Vue.component(MyChannel.name, MyChannel)
+    Vue.component(MyImage.name, MyImage)
   }
 }
